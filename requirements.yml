@@ -1,0 +1,7 @@
+- src: jgoodall.maven3
+- src: jyunderwood.java8
+- src: alban.andrieu.eclipse
+- src: https://github.com/ANXS/scala
+  version: master
+  name: ANXS.scala
+
