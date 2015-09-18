@@ -1,0 +1,32 @@
+---
+
+- name: Groovy | Download groovy
+  get_url:
+    url: "http://dl.bintray.com/groovy/maven/apache-groovy-binary-2.4.4.zip"
+    dest: "/tmp/apache-groovy-binary-2.4.4.zip"
+
+- name: Groovy | Unpack the compressed Groovy
+  command: unzip /tmp/apache-groovy-binary-2.4.4.zip -d /usr/local
+
+- name: Groovy | Rename Groovy folder
+  command: mv /usr/local/groovy-2.4.4 /usr/local/groovy
+
+- name: Groovy | Set the permissions on the Gradle binary
+  file:
+    path: "/usr/local/groovy/bin"
+    state: directory
+    mode: 0755
+    recurse: yes
+
+- name: Groovy | Add the Groovy binary to the system path (/etc/profile)
+  lineinfile:
+    dest: /etc/profile
+    regexp: "{{item.regexp}}"
+    line: "{{item.line}}"
+    state: present
+  with_items:
+    - regexp: "^GROOVY_HOME=/usr/local/groovy"
+      line: "GROOVY_HOME=/usr/local/groovy"
+    - regexp: "^PATH=.*GROOVY_HOME.*"
+      line: "PATH=$PATH:$GROOVY_HOME/bin"
+

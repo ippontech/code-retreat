@@ -1,6 +1,10 @@
 - src: jgoodall.maven3
 - src: jyunderwood.java8
-- src: alban.andrieu.eclipse
+- src: MagneDavidsen.gradle
+- src: ANXS.build-essential
+- src: ANXS.nodejs
+- src: ANXS.oracle-jdk
+- src: ANXS.clojure
 - src: https://github.com/ANXS/scala
   version: master
   name: ANXS.scala

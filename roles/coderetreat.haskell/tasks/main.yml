@@ -1,0 +1,8 @@
+---
+
+- name: Haskell | install packages
+  apt: name={{ item }} state=latest update_cache=yes
+  with_items:
+    - ghc
+    - ghc-prof
+    - ghc-doc

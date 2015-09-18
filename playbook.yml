@@ -10,13 +10,23 @@
     scala_versions: ["2.11.7"]
     scala_default_version: "2.11.7"
     scala_sbt_version: "0.13.9"
+    clojure_versions: ["1.7.0"]
+    clojure_default_version: "1.7.0"
+    clojure_lein_version: "2.5.3"
+    nodejs_version: "4.1.0"
+    gradle_version: "2.7"
 
   roles:
 #    - { role: desktop, sudo: true }
     - { role: jyunderwood.java8, sudo: true }
     - { role: ANXS.scala, sudo: true }
+    - { role: ANXS.clojure, sudo: true }
     - { role: jgoodall.maven3, maven_version: 3.3.3, sudo: true }
-    - { role: alban.andrieu.eclipse, sudo: true }
+    - { role: ANXS.nodejs, sudo: true }
+    - { role: coderetreat.grunt, sudo: true }
+    - { role: coderetreat.groovy, sudo: true }
+    - { role: coderetreat.haskell, sudo: true }
+    - { role: MagneDavidsen.gradle, sudo: true }
 #    - { role: idea }
 #    - { role: code-retreat }
 
