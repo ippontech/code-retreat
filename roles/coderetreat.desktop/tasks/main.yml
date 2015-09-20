@@ -1,0 +1,5 @@
+---
+
+- name: Install Ubuntu Desktop
+  apt: name=ubuntu-desktop state=latest update_cache=yes
+  sudo: true
