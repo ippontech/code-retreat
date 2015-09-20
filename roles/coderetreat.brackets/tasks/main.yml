@@ -1,0 +1,18 @@
+---
+
+- name: Brackets | download libgcrypt11
+  get_url:
+    url: "https://launchpad.net/ubuntu/+archive/primary/+files/libgcrypt11_1.5.3-2ubuntu4.2_amd64.deb"
+    dest: "/tmp/libgcrypt11_1.5.3-2ubuntu4.2_amd64.deb"
+
+- name: Brackets | install libgcrypt11
+  apt: deb=/tmp/libgcrypt11_1.5.3-2ubuntu4.2_amd64.deb
+
+- name: Brackets | download brackets
+  get_url:
+    url: "https://github.com/adobe/brackets/releases/download/release-1.4%2Beb4/Brackets.1.4.Extract.64-bit.deb"
+    dest: "/tmp/Brackets.1.4.Extract.64-bit.deb"
+
+- name: Brackets | install brackets
+  apt: deb=/tmp/Brackets.1.4.Extract.64-bit.deb
+
