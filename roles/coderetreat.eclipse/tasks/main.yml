@@ -1,0 +1,15 @@
+---
+
+- name: Eclipse | download
+  get_url: url="https://eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/mars/R/eclipse-jee-mars-R-linux-gtk-x86_64.tar.gz&r=1" dest=/tmp/eclipse-jee-mars-R-linux-gtk-x86_64.tar.gz
+
+- name: Eclipse | unpack
+  unarchive: src=/tmp/eclipse-jee-mars-R-linux-gtk-x86_64.tar.gz dest=/usr/local copy=no
+
+- name: Eclipse | eclipse in system path
+  lineinfile:
+    dest: /etc/profile
+    regexp: "^PATH=.*/usr/local/eclipse.*"
+    line: "PATH=$PATH:/usr/local/eclipse"
+    state: present
+
