@@ -30,6 +30,7 @@
     - { role: coderetreat.misc, sudo: true }
     - { role: MagneDavidsen.gradle, sudo: true }
     - { role: coderetreat.eclipse, sudo: true }
+    - { role: coderetreat.atom, sudo: true }
     - { role: coderetreat.idea }
 
   tasks:
