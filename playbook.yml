@@ -41,12 +41,12 @@
 #        dest={{ home }}/.bashrc
 #        line="export JAVA_HOME=/usr/lib/jvm/java-8-oracle/"
     
-    - name: mkdir maven-project
+    - name: mkdir arc
       file: path="{{ home }}/src/" state=directory owner={{ user }} group={{ group }}
 
     - name: Copy maven-project to VM
       synchronize:
-        src: maven-project
+        src: "maven-project"
         dest: "{{ home }}/src/"
         recursive: yes
         delete: yes
@@ -54,8 +54,24 @@
           - "--exclude=*.iml"
           - "--exclude=target"
 
+    - name: Copy sbt-projects to VM
+      synchronize:
+        src: "sbt-project"
+        dest: "{{ home }}/src/"
+        recursive: yes
+        delete: yes
+        rsync_opts: 
+          - "--exclude=*.iml"
+          - "--exclude=target"
+          - "--exclude=project"
+
     - name: Launch maven clean install for maven-project
       command: mvn clean install
       args:
         chdir: "{{ home }}/src/maven-project"
+
+    - name: Launch sbt clean test for sbt-project
+      command: sbt clean test
+      args:
+        chdir: "{{ home }}/src/sbt-project"
 
