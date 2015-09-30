@@ -4,6 +4,8 @@
   vars:
     user: vagrant
     group: vagrant
+    home: /home/{{ user }}
+
     java_packages:
       - oracle-java8-installer
     spark_version: 1.4.1-bin-hadoop2.6
@@ -17,24 +19,43 @@
     gradle_version: "2.7"
 
   roles:
-    - { role: coderetreat.desktop, sudo: true }
-    - { role: jyunderwood.java8, sudo: true }
-    - { role: ANXS.scala, sudo: true }
-    - { role: ANXS.clojure, sudo: true }
-    - { role: jgoodall.maven3, maven_version: 3.3.3, sudo: true }
-    - { role: ANXS.nodejs, sudo: true }
-    - { role: coderetreat.grunt, sudo: true }
-    - { role: coderetreat.groovy, sudo: true }
-    - { role: coderetreat.haskell, sudo: true }
-    - { role: coderetreat.brackets, sudo: true }
-    - { role: coderetreat.misc, sudo: true }
-    - { role: MagneDavidsen.gradle, sudo: true }
-    - { role: coderetreat.eclipse, sudo: true }
-    - { role: coderetreat.atom, sudo: true }
-    - { role: coderetreat.idea }
+ #   - { role: coderetreat.desktop, sudo: true }
+ #   - { role: jyunderwood.java8, sudo: true }
+ #   - { role: ANXS.scala, sudo: true }
+ #   - { role: ANXS.clojure, sudo: true }
+ #   - { role: jgoodall.maven3, maven_version: 3.3.3, sudo: true }
+ #   - { role: ANXS.nodejs, sudo: true }
+ #   - { role: coderetreat.grunt, sudo: true }
+ #   - { role: coderetreat.groovy, sudo: true }
+ #   - { role: coderetreat.haskell, sudo: true }
+ #   - { role: coderetreat.brackets, sudo: true }
+ #   - { role: coderetreat.misc, sudo: true }
+ #   - { role: MagneDavidsen.gradle, sudo: true }
+ #   - { role: coderetreat.eclipse, sudo: true }
+ #   - { role: coderetreat.atom, sudo: true }
+ #   - { role: coderetreat.idea }
 
   tasks:
-    - name: Setup the JAVA_HOME
-      lineinfile:
-        dest=/home/{{user}}/.bashrc
-        line="export JAVA_HOME=/usr/lib/jvm/java-8-oracle/"
+#    - name: Setup the JAVA_HOME
+#      lineinfile:
+#        dest={{ home }}/.bashrc
+#        line="export JAVA_HOME=/usr/lib/jvm/java-8-oracle/"
+    
+    - name: mkdir maven-project
+      file: path="{{ home }}/src/" state=directory owner={{ user }} group={{ group }}
+
+    - name: Copy maven-project to VM
+      synchronize:
+        src: maven-project
+        dest: "{{ home }}/src/"
+        recursive: yes
+        delete: yes
+        rsync_opts: 
+          - "--exclude=*.iml"
+          - "--exclude=target"
+
+    - name: Launch maven clean install for maven-project
+      command: mvn clean install
+      args:
+        chdir: "{{ home }}/src/maven-project"
+
